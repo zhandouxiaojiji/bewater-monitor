@@ -32,7 +32,6 @@ echo thread = 8 >> ${config}
 echo logpath = \".\" >> ${config}
 echo harbor = 0 >> ${config}
 echo start = \"${start_script}\" >> ${config}
-echo 'cluster = workspace.."config/clustername.lua"' >> ${config}
 echo 'bootstrap = "snlua bootstrap"' >> ${config}
 echo 'lualoader = "lualib/loader.lua"' >> ${config}
 echo 'snax = workspace.."service/?.lua"' >> ${config}
