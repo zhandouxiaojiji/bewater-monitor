@@ -38,16 +38,18 @@ function M:node_start(c_name, c_addr, proj_name, host, port)
     cluster.reload(conf.clustername)
 
     self.nodes[addr] = {
-        c_name = c_name,
-        c_addr = c_addr,
-        proj_name = proj_name,
-        host = host,
-        port = port, 
+        proj_name   = proj_name,
+        c_name      = c_name,
+        c_addr      = c_addr,
+        host        = host,
+        port        = port, 
+        cpu         = 0,
+        mem         = 0,
     }
 end
 
-function M:node_ping(addr)
-    trace("ping from %s", addr)
+function M:node_ping(addr, cpu, mem)
+    trace("ping from %s %s %s", addr, cpu, mem)
     return util.NORET
 end
 

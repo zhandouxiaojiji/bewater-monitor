@@ -4,7 +4,7 @@ mkdir -p $workspace/log
 mkdir -p $workspace/log/pid/
 
 cd $workspace/../../skynet
-./skynet ${workspace}/etc/monitor.cfg
+./skynet ${workspace}/etc/monitord.cfg
 
 cd $workspace/log
-tail -f monitor.log
+tail -f monitord.log
