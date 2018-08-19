@@ -2,15 +2,10 @@ local skynet = require "skynet"
 local conf = {
     workspace = skynet.getenv('workspace'),
 
-    proj_name = "login",
-    gate = {
-        host = "127.0.0.1",
-        port = 8710,
-        preload = 10,
-    },
+    proj_name = "monitor",
     webconsole = {
         host = "127.0.0.1",
-        port = 8711,
+        port = 8701,
     },
 
     mongo = {
@@ -19,26 +14,15 @@ local conf = {
         port = 8799,
     },
 
-    redis = {
-        host = "127.0.0.1",
-        port = 6378,
-        preload = 10,
-    },
-    
-    mysql = {
-        host = "127.0.0.1",
-        port = 3306,
-        name = "test",
-    },
-
     -- 通用节点
     clustername = {
-        stop = "127.0.0.1:9999",
+        stop    = "127.0.0.1:9999",
+        monitor = "127.0.0.1:9998",
     },
     -- 本节点
     cluster = {
-        name = "login",
-        addr = "127.0.0.1:11120",
+        name = "monitor",
+        addr = "127.0.0.1:9998",
     },
 
     MAX_LOGINING = 10,
