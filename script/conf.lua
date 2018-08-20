@@ -25,6 +25,14 @@ local conf = {
         addr = "127.0.0.1:9998",
     },
 
+    alert = { 
+        enable      = true,
+        corpid      = 'dingbf0f32a0c5a10f0735c2f4657eb6378f',
+        corpsecret  = 'E-69ZUSz-6ZizoXNoOLc0HEdiJ6VZb1AXJ5mGPSgjxDVKeMQ2h6YQfhLvWDxGwa9',
+        sender      = 'manager3375',
+        chatid      = 'chatc342986381ccae6028a690369580d9d0',
+    },
+
     MAX_LOGINING = 10,
 }
 

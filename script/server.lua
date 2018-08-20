@@ -1,16 +1,19 @@
-local skynet = require "skynet.manager"
-local cluster = require "skynet.cluster"
-local db = require "db.mongo_helper"
-local conf = require "conf"
-local util = require "util"
-local json = require "cjson"
-local log = require "log"
+local skynet    = require "skynet.manager"
+local cluster   = require "skynet.cluster"
+local db        = require "db.mongo_helper"
+local conf      = require "conf"
+local util      = require "util"
+local json      = require "cjson"
+local sname     = require "sname"
+local log       = require "log"
 
 local trace = log.trace("monitor")
 local print = log.print("monitor")
 local table_insert = table.insert
 local table_remove = table.remove
 local table_sort   = table.sort
+
+local TIMEOUT = 2
 
 local M = {}
 function M:start()
@@ -20,6 +23,22 @@ function M:start()
     skynet.register "svr"
 
     self.nodes = {} -- addr -> node
+
+    skynet.fork(function()
+        while true do
+            for addr, node in pairs(self.nodes) do
+                if not node.istimeout and os.time() - node.timestamp > TIMEOUT  then
+                    trace("node %s is timeout", addr)
+                    node.istimeout = true 
+                    if conf.alert and conf.alert.enable then
+                        skynet.send(sname.ALERT, "lua", "node_dead", node.proj_name, node.c_name, node.pnet_addr, 
+                            node.inet_addr, node.pid, node.cpu, node.mem)
+                    end
+                end
+            end
+            skynet.sleep(10)
+        end
+    end)
 end
 
 function M:stop()
@@ -31,9 +50,9 @@ end
 
 -- c_name 节点名    game1
 -- c_addr 节点地址  127.0.0.1:5555
-function M:node_start(c_name, c_addr, proj_name, host, port)
+function M:node_start(c_name, c_addr, proj_name, pnet_addr, inet_addr, pid)
     local addr = c_addr
-    print(c_name, c_addr, proj_name, host, port)
+    print(c_name, c_addr, proj_name, pnet_addr, inet_addr)
     conf.clustername[c_name] = c_addr 
     cluster.reload(conf.clustername)
 
@@ -41,15 +60,24 @@ function M:node_start(c_name, c_addr, proj_name, host, port)
         proj_name   = proj_name,
         c_name      = c_name,
         c_addr      = c_addr,
-        host        = host,
-        port        = port, 
+        pnet_addr   = pnet_addr,
+        inet_addr   = inet_addr, 
         cpu         = 0,
         mem         = 0,
+        pid         = pid,
+        timestamp   = os.time(),
     }
 end
 
 function M:node_ping(addr, cpu, mem)
     trace("ping from %s %s %s", addr, cpu, mem)
+    local node = self.nodes[addr]
+    if not node then
+        return
+    end
+    node.timestamp = os.time() 
+    node.cpu = cpu
+    node.mem = mem
     return util.NORET
 end
 
