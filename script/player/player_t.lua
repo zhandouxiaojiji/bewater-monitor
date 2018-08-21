@@ -13,6 +13,6 @@ function player_t:ctor()
     self.net = network_t.new(self)
     self.login = player_login_t.new(self)
     self.skynet = player_skynet_t.new(self)
-    self.minitor = player_monitor_t.new(self)
+    self.monitor = player_monitor_t.new(self)
 end
 return player_t

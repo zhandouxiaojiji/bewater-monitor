@@ -48,9 +48,13 @@ function M:stop()
     end)
 end
 
+function M:get_nodes()
+    return self.nodes
+end
+
 -- c_name 节点名    game1
 -- c_addr 节点地址  127.0.0.1:5555
-function M:node_start(c_name, c_addr, proj_name, pnet_addr, inet_addr, pid)
+function M:node_start(c_name, c_addr, proj_name, pnet_addr, inet_addr, pid, webconsole)
     local addr = c_addr
     print(c_name, c_addr, proj_name, pnet_addr, inet_addr)
     conf.clustername[c_name] = c_addr 
@@ -65,6 +69,7 @@ function M:node_start(c_name, c_addr, proj_name, pnet_addr, inet_addr, pid)
         cpu         = 0,
         mem         = 0,
         pid         = pid,
+        webconsole  = webconsole,
         timestamp   = os.time(),
     }
 end
