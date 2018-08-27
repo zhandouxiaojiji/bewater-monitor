@@ -13,7 +13,7 @@ function M:c2s_nodes()
     local list = {}
     for _, v in pairs(nodes) do
         list[#list+1] = {
-            proj_name   = v.proj_name,
+            proj        = v.proj,
             c_name      = v.c_name,
             c_addr      = v.c_addr,
             pnet_addr   = v.pnet_addr,

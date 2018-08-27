@@ -2,7 +2,7 @@ local skynet = require "skynet"
 local conf = {
     workspace = skynet.getenv('workspace'),
 
-    proj_name = "monitor",
+    proj = "monitor",
     webconsole = {
         host = "www.kaizhan8.com",
         port = 8701,
@@ -13,11 +13,18 @@ local conf = {
         name = "test",
         port = 8799,
     },
+    redis = {
+        host = "127.0.0.1",
+        port = 6378,
+        preload = 10,
+    },
+    whitelist = true,
 
     -- 通用节点
     clustername = {
         stop    = "127.0.0.1:9999",
         monitor = "127.0.0.1:9998",
+        share   = "127.0.0.1:9997",
     },
     -- 本节点
     cluster = {

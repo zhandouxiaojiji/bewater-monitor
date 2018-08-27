@@ -31,7 +31,7 @@ function M:start()
                     trace("node %s is timeout", addr)
                     node.istimeout = true 
                     if conf.alert and conf.alert.enable then
-                        skynet.send(sname.ALERT, "lua", "node_dead", node.proj_name, node.c_name, node.pnet_addr, 
+                        skynet.send(sname.ALERT, "lua", "node_dead", node.proj, node.c_name, node.pnet_addr, 
                             node.inet_addr, node.pid, node.cpu, node.mem)
                     end
                 end
@@ -54,14 +54,14 @@ end
 
 -- c_name 节点名    game1
 -- c_addr 节点地址  127.0.0.1:5555
-function M:node_start(c_name, c_addr, proj_name, pnet_addr, inet_addr, pid, webconsole)
+function M:node_start(c_name, c_addr, proj, pnet_addr, inet_addr, pid, webconsole)
     local addr = c_addr
-    print(c_name, c_addr, proj_name, pnet_addr, inet_addr)
+    print(c_name, c_addr, proj, pnet_addr, inet_addr)
     conf.clustername[c_name] = c_addr 
     cluster.reload(conf.clustername)
 
     self.nodes[addr] = {
-        proj_name   = proj_name,
+        proj        = proj,
         c_name      = c_name,
         c_addr      = c_addr,
         pnet_addr   = pnet_addr,
