@@ -55,4 +55,8 @@ function opcode.urlrequest(code)
     return code2urlrequest[code]
 end
 
+function opcode.get_code2name()
+    return code2name
+end
+
 return opcode

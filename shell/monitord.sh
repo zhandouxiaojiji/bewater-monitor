@@ -7,4 +7,4 @@ cd $workspace/../../skynet
 ./skynet ${workspace}/etc/monitord.cfg
 
 cd $workspace/log
-tail -f monitord.log
+tail -f monitor.log

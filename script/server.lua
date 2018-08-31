@@ -1,11 +1,12 @@
-local skynet    = require "skynet.manager"
-local cluster   = require "skynet.cluster"
-local db        = require "db.mongo_helper"
-local conf      = require "conf"
-local util      = require "util"
-local json      = require "cjson"
-local sname     = require "sname"
-local log       = require "log"
+local skynet        = require "skynet.manager"
+local cluster       = require "skynet.cluster"
+local clusterinfo   = require "clusterinfo"
+local db            = require "db.mongo_helper"
+local conf          = require "conf"
+local util          = require "util"
+local json          = require "cjson"
+local sname         = require "sname"
+local log           = require "log"
 
 local trace = log.trace("monitor")
 local print = log.print("monitor")
@@ -18,8 +19,8 @@ local TIMEOUT = 2
 local M = {}
 function M:start()
     trace("monitor start!")
-    cluster.reload(conf.clustername)
-    cluster.open(conf.cluster.name)
+    cluster.reload(conf.cluster)
+    cluster.open(clusterinfo.clustername)
     skynet.register "svr"
 
     self.nodes = {} -- addr -> node
@@ -57,8 +58,8 @@ end
 function M:node_start(c_name, c_addr, proj, pnet_addr, inet_addr, pid, webconsole)
     local addr = c_addr
     print(c_name, c_addr, proj, pnet_addr, inet_addr)
-    conf.clustername[c_name] = c_addr 
-    cluster.reload(conf.clustername)
+    conf.cluster[c_name] = c_addr 
+    cluster.reload(conf.cluster)
 
     self.nodes[addr] = {
         proj        = proj,

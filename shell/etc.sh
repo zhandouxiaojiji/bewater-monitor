@@ -16,18 +16,18 @@ workspace=$(cd $(dirname $0); pwd)
 proj_name=$(basename $workspace)
 cd -
 
-clustername=$1 #master
+etc_name=$1 #master
 start_script=$2
-is_deamon=$3 #true
+clustername=$3 #master
+is_deamon=$4 #true
 
-config=${clustername}.cfg
+config=${etc_name}.cfg
 
 mkdir -p ${workspace}/log
 mkdir -p ${workspace}/etc
 cd ${workspace}/etc
 
 echo workspace = \"../${root_name}/${proj_name}/\" > ${config}
-echo clustername = \"${clustername}\" >> ${config}
 echo thread = 8 >> ${config}
 echo logpath = \".\" >> ${config}
 echo harbor = 0 >> ${config}
@@ -42,7 +42,15 @@ echo 'lua_cpath = workspace.."luaclib/?.so;"..workspace.."../../common/luaclib/?
 echo logger = \"logger\" >> ${config}
 echo logservice = \"snlua\" >> ${config}
 
+if [ "${clustername}" != "" ]
+then
+    echo clustername = \"${clustername}\" >> ${config}
+else
+    echo clustername = \"${etc_name}\" >> ${config}
+fi
+
 if [ "${is_deamon}" == "true" ]
 then
-    echo daemon = \"${workspace}/log/pid/${clustername}.pid\" >> ${config}
+    echo daemon = workspace..\"/log/pid/${etc_name}.pid\" >> ${config}
 fi
+
