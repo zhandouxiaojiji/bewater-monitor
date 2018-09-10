@@ -5,26 +5,25 @@ local conf = {
     proj = "monitor",
     webconsole = {
         host = "www.kaizhan8.com",
-        port = 8701,
+        port = 8800,
     },
 
     mongo = {
         host = "127.0.0.1",
         name = "test",
-        port = 8799,
+        port = 19999,
     },
     redis = {
         host = "127.0.0.1",
-        port = 6378,
+        port = 19998,
         preload = 10,
     },
     whitelist = true,
 
     -- 通用节点
     cluster = {
-        stop    = "127.0.0.1:9999",
-        monitor = "127.0.0.1:9998",
-        share   = "127.0.0.1:9997",
+        monitor = "127.0.0.1:19800",
+        share   = "127.0.0.1:19801",
     },
 
     alert = { 
