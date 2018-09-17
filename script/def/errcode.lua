@@ -18,11 +18,11 @@ end})
 
 
 REG("OK",                   0x0000, "执行成功")
-REG("LoginBusy",            0x0001, "服务器忙！")
-REG("ServerNotLaunch",      0x0002, "服役器未启动！")
-REG("AccountExist",         0x0003, "该账号已经注册！")
-REG("SignError",            0x0004, "签名错误")
+REG("SERVER_BUSY",          0x0001, "服务器忙！")
+REG("SERVER_CLOSED",        0x0002, "服役器未启动！")
+REG("ACCOUNT_EXIST",        0x0003, "该账号已经注册！")
+REG("SIGN_ERROR",           0x0004, "签名错误")
 
-REG("Traceback",            0xa000, "服务器报错！")
+REG("TRACEBACK",            0xa000, "服务器报错！")
 
 return errcode
