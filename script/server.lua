@@ -1,6 +1,6 @@
 local skynet        = require "skynet.manager"
 local cluster       = require "skynet.cluster"
-local clusterinfo   = require "clusterinfo"
+local clusterinfo   = require "util.clusterinfo"
 local db            = require "db.mongo_helper"
 local conf          = require "conf"
 local util          = require "util"
@@ -20,7 +20,7 @@ local M = {}
 function M:start()
     trace("monitor start!")
     cluster.reload(conf.cluster)
-    cluster.open(clusterinfo.clustername)
+    cluster.open(conf.clustername)
     skynet.register "svr"
 
     self.nodes = {} -- addr -> node

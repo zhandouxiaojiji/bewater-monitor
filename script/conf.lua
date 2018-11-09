@@ -25,6 +25,7 @@ local conf = {
         monitor = "127.0.0.1:19800",
         share   = "127.0.0.1:19801",
     },
+    clustername = skynet.getenv "clustername",
 
     alert = { 
         --enable      = true,
